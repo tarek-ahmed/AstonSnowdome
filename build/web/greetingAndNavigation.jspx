@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+
+    <jsp:element name="body">
+        <jsp:attribute name="lang">EN</jsp:attribute>
+        <style type='text/css'>
+            #navigationBar{
+                width: 100%;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-weight: 600;
+            }
+            .navigationButton{
+                all: unset;
+                cursor: pointer;
+                margin: 10px;
+            }
+            .navigationButton:hover{
+                color: rgb(168,157,186);
+            }
+        </style>
+        <jsp:body>
+            <p>Greetings, ${userName} !</p>
+            <div id="navigationBar">
+                <p><a class="navigationButton" href="viewLessons">View all lessons</a> <a class="navigationButton" href="viewSelectedLessons">View my selected lessons</a> <a class="navigationButton" href="logout">Log out</a></p>
+            </div>
+        </jsp:body>
+    </jsp:element>
+</jsp:root>

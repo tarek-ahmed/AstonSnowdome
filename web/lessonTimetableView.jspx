@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jsp:root  xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:jsp="http://java.sun.com/JSP/Page"
+           xmlns:c="http://java.sun.com/jsp/jstl/core"
+           xmlns:f="http://java.sun.com/jsp/jstl/fmt"
+           version="2.0">
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+    
+    <jsp:element name="heading">
+        <h1>Timetable of free lessons.</h1>
+    </jsp:element>
+        
+    <jsp:include page="./greetingAndNavigation.jspx"/>
+    
+    <jsp:element name="html">
+        <jsp:attribute name="lang">EN</jsp:attribute>
+        <head><title>Aston SnowDome - Timetable</title></head>
+        <style type='text/css'>
+            * {
+                font-family: Palatino;
+            }
+            body { 
+                background-color: white; 
+                display: flex; 
+                align-items: center; 
+                flex-direction: column;
+            }
+            #lessonsTable{
+                border-collapse: collapse;
+            }
+            #tableHeadings{
+                border-bottom: 1px double black;
+                font-weight: bold;
+                color: rgb(168,157,186);
+            }            
+            td{
+                padding: 10px;
+            }
+            input[type=submit] {
+                margin-top: 10px; 
+                font-size: 10pt; 
+                height: 30px; 
+                width: 100px; 
+                border: 1px solid rgb(168,157,186);
+                background-color: white; 
+                color: black;
+                border-radius: 12px;
+            }
+            .inactiveButton{
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            .activeButton{
+                opacity: 1;
+                cursor: pointer;
+            }
+        </style>
+        <jsp:body>
+            <jsp:useBean class="model.LessonTimetable" id="lessonTimetable" scope="application"/>
+            <table id="lessonsTable">
+                <tr id="tableHeadings">
+                    <td>Description</td>
+                    <td>Date</td>
+                    <td>Start Time</td>
+                    <td>End Time</td>
+                    <td>Level</td>
+                    <td> </td>
+                </tr>
+                <c:forEach var="lesson" items="${lessonTimetable.lessons}">
+                        <form method="POST" action="addLesson">
+                            <tr>
+                                <td><c:out value="${lesson.value.description}"/></td>
+                                <td><c:out value="${lesson.value.date}"/></td>
+                                <td><c:out value="${lesson.value.startTime}"/></td>
+                                <td><c:out value="${lesson.value.endTime}"/></td>
+                                <td><c:out value="${lesson.value.level}"/></td>
+                                <td><input type="hidden" name="lessonId" value="${lesson.key}"/>
+                                <c:choose>
+                                    <c:when test="${lessonSelection.getNumChosen() >= 3 || lessonSelection.getLesson(lesson.value.id) != null}">
+                                        <input class="inactiveButton" type="submit" disabled="disabled" value="Select Lesson"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input class="activeButton" type="submit" value="Select Lesson"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                </td>
+                            </tr>
+                        </form>
+                </c:forEach>
+            </table>
+        </jsp:body>
+    </jsp:element>
+        
+</jsp:root>
